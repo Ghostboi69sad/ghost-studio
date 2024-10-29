@@ -1,0 +1,37 @@
+{
+  "rules": [
+    {
+      "pattern": "**/package.json",
+      "language": "json"
+    },
+    {
+      "pattern": "**/*.css",
+      "language": "css"
+    },
+    {
+      "pattern": "**/*.ts",
+      "language": "typescript"
+    },
+    {
+      "pattern": "**/*.tsx",
+      "language": "typescriptreact"
+    },
+    {
+      "pattern": "**/*.js",
+      "language": "javascript"
+    },
+    {
+      "pattern": "**/*.jsx",
+      "language": "javascriptreact"
+    },
+    {
+      "pattern": "**/tailwind.config.ts",
+      "language": "typescript"
+    },
+    {
+      "pattern": "**/index.html",
+      "language": "html"
+    }
+  ]
+}
+
