@@ -11,6 +11,7 @@
 *.scss text eol=lf
 *.html text eol=lf
 *.md text eol=lf
+*.toml text eol=lf
 
 # Binary files
 *.png binary
