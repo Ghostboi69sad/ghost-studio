@@ -7,4 +7,13 @@ export const getMediaUrl = (key: string) => {
   // تحويل الرابط الكامل إلى مسار نسبي
   const path = key.replace(/^https?:\/\/[^\/]+\//, '');
   return `https://${cloudfrontDomain}/${path}`;
+};
+
+export const getCacheControl = (fileType: string) => {
+  switch (fileType) {
+    case 'video/mp4':
+      return 'max-age=31536000'; // سنة واحدة
+    default:
+      return 'max-age=86400'; // يوم واحد
+  }
 }; 

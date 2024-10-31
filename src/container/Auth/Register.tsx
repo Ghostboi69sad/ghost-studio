@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+import { database } from '../../../lib/firebase/config';
 import Navbar from "../../component/Navbar/Navbar";
 import Footer from "../../component/footer/Footer";
 
@@ -14,12 +16,38 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+    
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(userCredential.user);
-      navigate('/profile'); // توجيه المستخدم إلى صفحة الملف الشخصي بعد التسجيل بنجاح
+      const user = userCredential.user;
+      
+      await set(ref(database, `users/${user.uid}`), {
+        email: user.email,
+        role: 'user',
+        createdAt: new Date().toISOString(),
+        emailVerified: false
+      });
+
+      await sendEmailVerification(user);
+      navigate('/verify-email');
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to create an account');
+      if (error instanceof Error) {
+        switch (error.message) {
+          case 'auth/email-already-in-use':
+            setError('Email already exists');
+            break;
+          case 'auth/invalid-email':
+            setError('Invalid email address');
+            break;
+          default:
+            setError('Failed to create account');
+        }
+      }
       console.error(error);
     }
   };
