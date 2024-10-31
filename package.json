@@ -6,7 +6,7 @@
     "src/*",
     "components",
     "functions",
-    "netlify/functions"
+    ".netlify/functions"
   ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.682.0",

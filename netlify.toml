@@ -9,6 +9,12 @@
   publish = "dist"
   functions = ".netlify/functions"
 
+[build.environment]
+  NODE_VERSION = "18"
+  YARN_VERSION = "1.22.19"
+  YARN_FLAGS = "--frozen-lockfile --legacy-peer-deps"
+  VITE_BUILD_CHUNK_SIZE_WARNING_LIMIT = "1000"
+
 [functions]
   directory = ".netlify/functions"
   node_bundler = "esbuild"
@@ -53,8 +59,3 @@
       img-src 'self' data: https:;
       font-src 'self' data: https:;
     """
-
-[build.environment]
-  NODE_VERSION = "18"
-  YARN_VERSION = "1.22.19"
-  YARN_FLAGS = "--frozen-lockfile --legacy-peer-deps"
