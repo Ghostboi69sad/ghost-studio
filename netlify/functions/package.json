@@ -1,9 +1,19 @@
 {
+  "name": "@sloosh/functions",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
   "dependencies": {
     "lokijs": "^1.5.12",
     "stripe": "^17.2.1",
     "firebase-admin": "^12.7.0",
     "firebase": "^11.0.1",
     "@netlify/functions": "^2.8.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
   }
 }

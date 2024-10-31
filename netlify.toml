@@ -1,5 +1,6 @@
 [build]
-command = "yarn run build-all"
+base = "/"
+command = "yarn install && cd netlify/functions && yarn install && yarn build"
 publish = "dist"
 functions = "netlify/functions"
 
@@ -11,7 +12,12 @@ NODE_ENV = "production"
 [functions]
 directory = "netlify/functions"
 node_bundler = "esbuild"
-external_node_modules = ["@aws-sdk/*", "firebase-admin"]
+external_node_modules = [
+  "@aws-sdk/*",
+  "firebase-admin",
+  "firebase",
+  "@netlify/functions"
+]
 included_files = [
   "src/course/**/*",
   "src/course-listing/**/*",
