@@ -1,10 +1,16 @@
 [build]
-  command = "git submodule update --init --recursive && yarn install --frozen-lockfile && yarn build"
+  command = """
+    git submodule update --init --recursive && \
+    yarn install --frozen-lockfile && \
+    cd src/course && yarn build && cd ../../ && \
+    cd src/course-listing && yarn build && cd ../../ && \
+    yarn build
+  """
   publish = "dist"
-  functions = "netlify/functions"
+  functions = ".netlify/functions"
 
 [functions]
-  directory = "netlify/functions"
+  directory = ".netlify/functions"
   node_bundler = "esbuild"
   included_files = ["src/course/**/*", "src/course-listing/**/*"]
 
@@ -44,6 +50,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  YARN_VERSION = "1.22.19"
   YARN_FLAGS = "--frozen-lockfile"
   VITE_BUILD_CHUNK_SIZE_WARNING_LIMIT = "1000"
 
