@@ -6,7 +6,10 @@
     "src/*",
     "components",
     "functions",
-    ".netlify/functions"
+    ".netlify/functions",
+    "src/course",
+    "src/course-listing",
+    "lib/firebase"
   ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.682.0",
