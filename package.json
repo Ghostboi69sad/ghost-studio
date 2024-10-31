@@ -110,7 +110,7 @@
     "build-listing": "cd src/course-listing && yarn install && yarn build",
     "build-main": "yarn build",
     "build-all": "yarn build-submodules && yarn install && yarn build-course && yarn build-listing && yarn build-main",
-    "build-netlify": "yarn install && yarn build && yarn build-functions"
+    "build-netlify": "yarn install && yarn typecheck && yarn build && yarn build-functions"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^6.0.0",
@@ -151,7 +151,8 @@
     "typescript": "^5.0.2",
     "vite": "^5.4.10",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^1.0.0"
+    "vitest": "^1.0.0",
+    "@types/vite": "^5.0.0"
   },
   "engines": {
     "node": ">=18"
