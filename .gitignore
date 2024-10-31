@@ -1,2 +1,11 @@
 /node_modules
 /build
+# AWS
+.aws-credentials
+.env.local
+.env.*.local
+
+# Build
+/dist
+/.netlify
+.env

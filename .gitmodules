@@ -1,9 +1,9 @@
 [submodule "src/course"]
-    path = src/course
-    url = https://github.com/Ghostboi69sad/course.git
+	path = src/course
+	url = https://github.com/Ghostboi69sad/course.git
     branch = main
 
 [submodule "src/course-listing"]
-    path = src/course-listing
-    url = https://github.com/Ghostboi69sad/course-listing.git
+	path = src/course-listing
+	url = https://github.com/Ghostboi69sad/course-listing.git
     branch = main

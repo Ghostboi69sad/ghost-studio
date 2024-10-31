@@ -1,5 +1,5 @@
 [build]
-  command = "yarn build"
+  command = "git submodule update --init --recursive && yarn build"
   publish = "dist"
   functions = "netlify/functions"
 
@@ -16,6 +16,16 @@
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/stripe-webhook"
+  to = "/.netlify/functions/stripe-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/check-subscription-status"
+  to = "/.netlify/functions/check-subscription-status"
   status = 200
 
 [functions]
@@ -35,22 +45,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:;"
 
 [build.environment]
   NODE_VERSION = "18"
-  VITE_FIREBASE_API_KEY = "AIzaSyB73XaVWk-_9gUQkpF69qFJ1BUiGzJD3a8"
-  VITE_FIREBASE_AUTH_DOMAIN = "e-learningproject-e4aad.firebaseapp.com"
-  VITE_FIREBASE_PROJECT_ID = "e-learningproject-e4aad"
-  VITE_FIREBASE_STORAGE_BUCKET = "e-learningproject-e4aad.appspot.com"
-  VITE_FIREBASE_MESSAGING_SENDER_ID = "433327478678"
-  VITE_FIREBASE_APP_ID = "1:433327478678:web:5eb88fef93439ff05a2fb7"
-  VITE_FIREBASE_DATABASE_URL = "https://e-learningproject-e4aad-default-rtdb.firebaseio.com"
-
-[[plugins]]
-  package = "@netlify/plugin-functions-install-core"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  NPM_FLAGS = "--legacy-peer-deps"
+  AWS_REGION = "your-region"
+  AWS_S3_BUCKET = "your-bucket-name"
+  AWS_ACCESS_KEY_ID = "your-access-key"
+  AWS_SECRET_ACCESS_KEY = "your-secret-key"
 
 [build.processing]
   skip_processing = false
@@ -63,5 +66,14 @@
   bundle = true
   minify = true
 
+[build.processing.html]
+  pretty_urls = true
+  
 [build.processing.images]
   compress = true
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[[plugins]]
+  package = "@netlify/plugin-git-utils"
