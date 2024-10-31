@@ -6,7 +6,7 @@
     "src/*",
     "components",
     "functions",
-    ".netlify/functions",
+    "netlify/functions",
     "src/course",
     "src/course-listing",
     "lib/firebase"

@@ -1,7 +1,7 @@
 [build]
 command = "yarn run build-all"
 publish = "dist"
-functions = ".netlify/functions"
+functions = "netlify/functions"
 
 [build.environment]
 NODE_VERSION = "18"
@@ -9,25 +9,30 @@ YARN_VERSION = "1.22.19"
 NODE_ENV = "production"
 
 [functions]
-directory = ".netlify/functions"
+directory = "netlify/functions"
 node_bundler = "esbuild"
-included_files = ["src/course/**/*", "src/course-listing/**/*"]
+external_node_modules = ["@aws-sdk/*", "firebase-admin"]
+included_files = [
+  "src/course/**/*",
+  "src/course-listing/**/*",
+  "lib/firebase/**/*"
+]
 
 [[redirects]]
 from = "/api/*"
-to = "/.netlify/functions/:splat"
+to = "/netlify/functions/:splat"
 status = 200
 force = true
 
 [[redirects]]
 from = "/stripe-webhook"
-to = "/.netlify/functions/stripe-webhook"
+to = "/netlify/functions/stripe-webhook"
 status = 200
 force = true
 
 [[redirects]]
 from = "/check-subscription-status"
-to = "/.netlify/functions/check-subscription-status"
+to = "/netlify/functions/check-subscription-status"
 status = 200
 force = true
 

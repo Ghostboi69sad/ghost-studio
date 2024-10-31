@@ -13,9 +13,9 @@
 .env.*
 
 # Allow Netlify functions
-!.netlify/
-!.netlify/functions/
-!.netlify/functions/**
+!netlify/
+!netlify/functions/
+!netlify/functions/**
 
 # Other
 123.txt
