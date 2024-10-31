@@ -1,5 +1,5 @@
 [build]
-  command = "git submodule update --init --recursive && npm install --legacy-peer-deps && npm run build"
+  command = "git submodule update --init --recursive && yarn install --frozen-lockfile && yarn build"
   publish = "dist"
   functions = "netlify/functions"
 
@@ -44,7 +44,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  NPM_FLAGS = "--legacy-peer-deps"
+  YARN_FLAGS = "--frozen-lockfile"
   VITE_BUILD_CHUNK_SIZE_WARNING_LIMIT = "1000"
 
 [build.processing]
