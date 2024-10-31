@@ -1,37 +1,37 @@
 [build]
-command = "yarn run build-all"
-publish = "dist"
-functions = ".netlify/functions"
+command="yarn run build-all"
+publish="dist"
+functions=".netlify/functions"
 
 [build.environment]
-NODE_VERSION = "18"
-YARN_VERSION = "1.22.19"
-NODE_ENV = "production"
+NODE_VERSION="18"
+YARN_VERSION="1.22.19"
+NODE_ENV="production"
 
 [functions]
-directory = ".netlify/functions"
-node_bundler = "esbuild"
-included_files = ["src/course/**/*", "src/course-listing/**/*"]
+directory=".netlify/functions"
+node_bundler="esbuild"
+included_files=["src/course/**/*","src/course-listing/**/*"]
 
 [[redirects]]
-from = "/api/*"
-to = "/.netlify/functions/:splat"
-status = 200
-force = true
+from="/api/*"
+to="/.netlify/functions/:splat"
+status=200
+force=true
 
 [[redirects]]
-from = "/stripe-webhook"
-to = "/.netlify/functions/stripe-webhook"
-status = 200
-force = true
+from="/stripe-webhook"
+to="/.netlify/functions/stripe-webhook"
+status=200
+force=true
 
 [[redirects]]
-from = "/check-subscription-status"
-to = "/.netlify/functions/check-subscription-status"
-status = 200
-force = true
+from="/check-subscription-status"
+to="/.netlify/functions/check-subscription-status"
+status=200
+force=true
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+from="/*"
+to="/index.html"
+status=200
