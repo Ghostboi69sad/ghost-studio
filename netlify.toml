@@ -1,5 +1,11 @@
 [build]
-  command = "git submodule update --init --recursive && yarn install --frozen-lockfile && cd src/course && yarn build && cd ../../ && cd src/course-listing && yarn build && cd ../../ && yarn build"
+  command = """
+    git submodule update --init --recursive && \
+    yarn install --frozen-lockfile --legacy-peer-deps && \
+    cd src/course && yarn install --legacy-peer-deps && yarn build && cd ../../ && \
+    cd src/course-listing && yarn install --legacy-peer-deps && yarn build && cd ../../ && \
+    yarn build
+  """
   publish = "dist"
   functions = ".netlify/functions"
 
@@ -30,7 +36,7 @@
 
 [[headers]]
   for = "/*"
-  [headers.values]
+    [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
@@ -40,32 +46,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:;"
+    Content-Security-Policy = """
+      default-src 'self' https:;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
+      style-src 'self' 'unsafe-inline' https:;
+      img-src 'self' data: https:;
+      font-src 'self' data: https:;
+    """
 
 [build.environment]
   NODE_VERSION = "18"
   YARN_VERSION = "1.22.19"
-  YARN_FLAGS = "--frozen-lockfile"
-  VITE_BUILD_CHUNK_SIZE_WARNING_LIMIT = "1000"
-
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-  tree_shaking = true
-  source_map = false
-
-[build.processing.html]
-  pretty_urls = true
-
-[build.processing.images]
-  compress = true
-
-[[plugins]]
-  package = "@netlify/plugin-functions-install-core"
+  YARN_FLAGS = "--frozen-lockfile --legacy-peer-deps"
