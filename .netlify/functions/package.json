@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "lokijs": "^1.5.12"
+    "lokijs": "^1.5.12",
+    "stripe": "^17.2.1",
+    "firebase-admin": "^12.7.0",
+    "firebase": "^11.0.1",
+    "@netlify/functions": "^2.8.2"
   }
 }
