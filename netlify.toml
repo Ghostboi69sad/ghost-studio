@@ -24,3 +24,14 @@ from = "/stripe-webhook"
 to = "/.netlify/functions/stripe-webhook"
 status = 200
 force = true
+
+[[redirects]]
+from = "/check-subscription-status"
+to = "/.netlify/functions/check-subscription-status"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
