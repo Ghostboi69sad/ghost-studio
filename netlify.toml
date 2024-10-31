@@ -1,11 +1,5 @@
 [build]
-  command = """
-    git submodule update --init --recursive && \
-    yarn install --frozen-lockfile && \
-    cd src/course && yarn build && cd ../../ && \
-    cd src/course-listing && yarn build && cd ../../ && \
-    yarn build
-  """
+  command = "git submodule update --init --recursive && yarn install --frozen-lockfile && cd src/course && yarn build && cd ../../ && cd src/course-listing && yarn build && cd ../../ && yarn build"
   publish = "dist"
   functions = ".netlify/functions"
 
@@ -36,7 +30,7 @@
 
 [[headers]]
   for = "/*"
-    [headers.values]
+  [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
@@ -56,7 +50,7 @@
 
 [build.processing]
   skip_processing = false
-  
+
 [build.processing.css]
   bundle = true
   minify = true
@@ -69,7 +63,7 @@
 
 [build.processing.html]
   pretty_urls = true
-  
+
 [build.processing.images]
   compress = true
 
