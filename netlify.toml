@@ -5,6 +5,8 @@
 
 [dev]
   command = "yarn dev"
+  framework = "#custom"
+  targetPort = 5173
 
 [[redirects]]
   from = "/*"
@@ -14,11 +16,6 @@
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/check-subscription-status"
-  to = "/.netlify/functions/check-subscription-status"
   status = 200
 
 [functions]
@@ -33,6 +30,11 @@
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Credentials = "true"
+    Cache-Control = "public, max-age=31536000"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -46,3 +48,20 @@
 
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.processing]
+  skip_processing = false
+  
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.images]
+  compress = true
