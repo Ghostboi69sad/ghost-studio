@@ -1,6 +1,6 @@
 [build]
 base = "/"
-command = "yarn install && cd netlify/functions && yarn install && yarn build"
+command = "yarn build-netlify"
 publish = "dist"
 functions = "netlify/functions"
 

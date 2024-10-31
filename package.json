@@ -99,16 +99,18 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck": "tsc --noEmit",
+    "build": "tsc && vite build",
+    "build-functions": "cd netlify/functions && yarn install && yarn build",
     "build-submodules": "git submodule update --init --recursive",
     "build-course": "cd src/course && yarn install && yarn build",
     "build-listing": "cd src/course-listing && yarn install && yarn build",
     "build-main": "yarn build",
-    "build-all": "yarn build-submodules && yarn install && yarn build-course && yarn build-listing && yarn build-main"
+    "build-all": "yarn build-submodules && yarn install && yarn build-course && yarn build-listing && yarn build-main",
+    "build-netlify": "yarn install && yarn build && yarn build-functions"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^6.0.0",
