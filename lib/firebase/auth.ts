@@ -4,8 +4,6 @@ import {
   signInWithEmailAndPassword, 
   signOut, 
   sendEmailVerification,
-  updateEmail,
-  updatePassword,
   User
 } from 'firebase/auth';
 import { ref, set } from 'firebase/database';

@@ -82,7 +82,7 @@ const Contact = (props) => {
                                         </div>
 
                                         <div className="text-right">
-                                            <a href="#!" className="medium font__size--16 text__16-1024 color__white btn btn__purple shadow rounded__50">Send Message</a>
+                                            <a href="#!" className="bold font__size--16 text__16-1024 btn btn__white wrapper__width-mm-100 shadow color__white mb-4 mb-sm-0 mr-sm-3">Send Message</a>
                                         </div>
                                     </div>
                                 </div>

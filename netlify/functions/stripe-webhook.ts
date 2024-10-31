@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import Stripe from 'stripe';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -52,20 +52,56 @@ export const handler: Handler = async (event) => {
         const session = stripeEvent.data.object as Stripe.Checkout.Session;
         const userId = session.client_reference_id;
         const customerId = session.customer as string;
+        const subscriptionId = session.subscription as string;
         
         if (userId) {
+          // Get subscription details
+          const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+          const planId = subscription.items.data[0].price.id;
+          const currentPeriodEnd = new Date(subscription.current_period_end * 1000);
+          
+          // Update Firebase
           const userRef = ref(db, `users/${userId}/subscription`);
           await set(userRef, {
             status: 'active',
+            planId,
             stripeCustomerId: customerId,
-            createdAt: Date.now(),
-            expirationDate: Date.now() + (30 * 24 * 60 * 60 * 1000), // 30 days
-            active: true
+            stripeSubscriptionId: subscriptionId,
+            currentPeriodEnd: currentPeriodEnd.toISOString(),
+            createdAt: new Date().toISOString()
           });
         }
         break;
       }
-      // يمكنك إضافة المزيد من أنواع الأحداث هنا
+
+      case 'customer.subscription.updated': {
+        const subscription = stripeEvent.data.object as Stripe.Subscription;
+        const userId = await getUserIdFromCustomerId(subscription.customer as string);
+        
+        if (userId) {
+          const userRef = ref(db, `users/${userId}/subscription`);
+          await set(userRef, {
+            status: subscription.status,
+            currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        }
+        break;
+      }
+
+      case 'customer.subscription.deleted': {
+        const subscription = stripeEvent.data.object as Stripe.Subscription;
+        const userId = await getUserIdFromCustomerId(subscription.customer as string);
+        
+        if (userId) {
+          const userRef = ref(db, `users/${userId}/subscription`);
+          await set(userRef, {
+            status: 'canceled',
+            canceledAt: new Date().toISOString()
+          });
+        }
+        break;
+      }
     }
 
     return {
@@ -83,3 +119,29 @@ export const handler: Handler = async (event) => {
     };
   }
 };
+
+interface UserSubscriptionData {
+  subscription?: {
+    stripeCustomerId: string;
+  };
+}
+
+async function getUserIdFromCustomerId(customerId: string): Promise<string | null> {
+  try {
+    const usersRef = ref(db, 'users');
+    const snapshot = await get(usersRef);
+    
+    if (snapshot.exists()) {
+      const users = snapshot.val() as Record<string, UserSubscriptionData>;
+      for (const [userId, userData] of Object.entries(users)) {
+        if (userData.subscription?.stripeCustomerId === customerId) {
+          return userId;
+        }
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting userId:', error);
+    return null;
+  }
+}

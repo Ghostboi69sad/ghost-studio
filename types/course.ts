@@ -20,12 +20,22 @@ export interface Course {
   description: string;
   instructor: string;
   duration: string;
-  level: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
   rating: number;
   enrolledStudents: number;
   price: number;
   chapters: Chapter[];
   isPublic: boolean;
+  isPremium: boolean;
+  thumbnail: string;
+  imageUrl?: string;
+  videoCount?: number;
+  category?: string;
+  tag?: string;
+  review?: number;
+  createdAt: string;
+  updatedAt: string;
+  accessType: 'free' | 'paid';
 }
 
 export interface CourseListingProps {

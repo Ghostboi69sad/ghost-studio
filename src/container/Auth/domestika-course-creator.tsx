@@ -13,7 +13,12 @@ const initialCourse: Course = {
   enrolledStudents: 0,
   price: 0,
   chapters: [],
-  isPublic: false
+  isPublic: false,
+  isPremium: false,
+  thumbnail: '',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  accessType: 'free'
 };
 
 const DomestikaCourseCreator: React.FC = () => {

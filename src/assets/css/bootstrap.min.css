@@ -39,10 +39,11 @@
  box-sizing:border-box
 }
 html {
- font-family:sans-serif;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
  line-height:1.15;
  -webkit-text-size-adjust:100%;
- -webkit-tap-highlight-color:transparent
+ -webkit-tap-highlight-color:transparent;
+ text-size-adjust:100%;
 }
 article,
 aside,
@@ -683,62 +684,77 @@ pre code {
 }
 .order-first {
  -ms-flex-order:-1;
+ -ms-order:-1;
  order:-1
 }
 .order-last {
  -ms-flex-order:13;
+ -ms-order:13;
  order:13
 }
 .order-0 {
  -ms-flex-order:0;
+ -ms-order:0;
  order:0
 }
 .order-1 {
  -ms-flex-order:1;
+ -ms-order:1;
  order:1
 }
 .order-2 {
  -ms-flex-order:2;
+ -ms-order:2;
  order:2
 }
 .order-3 {
  -ms-flex-order:3;
+ -ms-order:3;
  order:3
 }
 .order-4 {
  -ms-flex-order:4;
+ -ms-order:4;
  order:4
 }
 .order-5 {
  -ms-flex-order:5;
+ -ms-order:5;
  order:5
 }
 .order-6 {
  -ms-flex-order:6;
+ -ms-order:6;
  order:6
 }
 .order-7 {
  -ms-flex-order:7;
+ -ms-order:7;
  order:7
 }
 .order-8 {
  -ms-flex-order:8;
+ -ms-order:8;
  order:8
 }
 .order-9 {
  -ms-flex-order:9;
+ -ms-order:9;
  order:9
 }
 .order-10 {
  -ms-flex-order:10;
+ -ms-order:10;
  order:10
 }
 .order-11 {
  -ms-flex-order:11;
+ -ms-order:11;
  order:11
 }
 .order-12 {
  -ms-flex-order:12;
+ -ms-order:12;
  order:12
 }
 .offset-1 {
@@ -850,62 +866,79 @@ pre code {
  }
  .order-sm-first {
   -ms-flex-order:-1;
+  -ms-order:-1;
+  -webkit-order:-1;
   order:-1
  }
  .order-sm-last {
   -ms-flex-order:13;
+  -ms-order:13;
+  -webkit-order:13;
   order:13
  }
  .order-sm-0 {
   -ms-flex-order:0;
+  -ms-order:0;
   order:0
  }
  .order-sm-1 {
   -ms-flex-order:1;
+  -ms-order:1;
   order:1
  }
  .order-sm-2 {
   -ms-flex-order:2;
+  -ms-order:2;
   order:2
  }
  .order-sm-3 {
   -ms-flex-order:3;
+  -ms-order:3;
   order:3
  }
  .order-sm-4 {
   -ms-flex-order:4;
+  -ms-order:4;
   order:4
  }
  .order-sm-5 {
   -ms-flex-order:5;
+  -ms-order:5;
   order:5
  }
  .order-sm-6 {
   -ms-flex-order:6;
+  -ms-order:6;
   order:6
  }
  .order-sm-7 {
   -ms-flex-order:7;
+  -ms-order:7;
   order:7
  }
  .order-sm-8 {
   -ms-flex-order:8;
+  -ms-order:8;
   order:8
  }
  .order-sm-9 {
   -ms-flex-order:9;
+  -ms-order:9;
   order:9
  }
  .order-sm-10 {
   -ms-flex-order:10;
+  -ms-order:10;
   order:10
  }
  .order-sm-11 {
   -ms-flex-order:11;
+  -ms-order:11;
   order:11
  }
  .order-sm-12 {
   -ms-flex-order:12;
+  -ms-order:12;
   order:12
  }
  .offset-sm-0 {
@@ -1021,62 +1054,80 @@ pre code {
  }
  .order-md-first {
   -ms-flex-order:-1;
+  -ms-order:-1;
   order:-1
  }
  .order-md-last {
   -ms-flex-order:13;
+  -ms-order:13;
   order:13
  }
  .order-md-0 {
   -ms-flex-order:0;
+  -ms-order:0;
   order:0
  }
  .order-md-1 {
   -ms-flex-order:1;
+  -ms-order:1;
   order:1
  }
  .order-md-2 {
   -ms-flex-order:2;
+  -ms-order:2;
   order:2
  }
  .order-md-3 {
   -ms-flex-order:3;
+  -ms-order:3;
   order:3
  }
  .order-md-4 {
   -ms-flex-order:4;
+  -ms-order:4;
   order:4
  }
  .order-md-5 {
   -ms-flex-order:5;
+  -ms-order:5;
   order:5
  }
  .order-md-6 {
   -ms-flex-order:6;
+  -ms-order:6;
   order:6
  }
  .order-md-7 {
   -ms-flex-order:7;
+  -ms-order:7;
   order:7
  }
  .order-md-8 {
   -ms-flex-order:8;
+  -ms-order:8;
   order:8
  }
  .order-md-9 {
   -ms-flex-order:9;
+  -ms-order:9;
   order:9
  }
  .order-md-10 {
   -ms-flex-order:10;
+  -ms-order:10;
+  -webkit-order:10;
   order:10
  }
  .order-md-11 {
   -ms-flex-order:11;
-  order:11
+  -ms-order:11;
+  order:11;
+  -webkit-order:11
  }
  .order-md-12 {
   -ms-flex-order:12;
+  -ms-order:12;
+  -webkit-order:12;
   order:12
  }
  .offset-md-0 {
@@ -1192,62 +1243,80 @@ pre code {
  }
  .order-lg-first {
   -ms-flex-order:-1;
+  -ms-order:-1;
   order:-1
  }
  .order-lg-last {
   -ms-flex-order:13;
+  -ms-order:13;
   order:13
  }
  .order-lg-0 {
   -ms-flex-order:0;
+  -ms-order:0;
   order:0
  }
  .order-lg-1 {
   -ms-flex-order:1;
+  -ms-order:1;
   order:1
  }
  .order-lg-2 {
   -ms-flex-order:2;
+  -ms-order:2;
   order:2
  }
  .order-lg-3 {
   -ms-flex-order:3;
+  -ms-order:3;
   order:3
  }
  .order-lg-4 {
   -ms-flex-order:4;
+  -ms-order:4;
   order:4
  }
  .order-lg-5 {
   -ms-flex-order:5;
+  -ms-order:5;
   order:5
  }
  .order-lg-6 {
   -ms-flex-order:6;
+  -ms-order:6;
   order:6
  }
  .order-lg-7 {
   -ms-flex-order:7;
+  -ms-order:7;
   order:7
  }
  .order-lg-8 {
   -ms-flex-order:8;
+  -ms-order:8;
   order:8
  }
  .order-lg-9 {
   -ms-flex-order:9;
+  -ms-order:9;
   order:9
  }
  .order-lg-10 {
   -ms-flex-order:10;
+  -ms-order:10;
+  -webkit-order:10;
   order:10
  }
  .order-lg-11 {
   -ms-flex-order:11;
+  -ms-order:11;
+  -webkit-order:11;
+  -ms-order:11;
   order:11
  }
  .order-lg-12 {
   -ms-flex-order:12;
+  -ms-order:12;
   order:12
  }
  .offset-lg-0 {
@@ -1363,62 +1432,79 @@ pre code {
  }
  .order-xl-first {
   -ms-flex-order:-1;
+  -ms-order:-1;
   order:-1
  }
  .order-xl-last {
   -ms-flex-order:13;
+  -ms-order:13;
   order:13
  }
  .order-xl-0 {
   -ms-flex-order:0;
+  -ms-order:0;
   order:0
  }
  .order-xl-1 {
   -ms-flex-order:1;
+  -ms-order:1;
   order:1
  }
  .order-xl-2 {
   -ms-flex-order:2;
+  -ms-order:2;
   order:2
  }
  .order-xl-3 {
   -ms-flex-order:3;
+  -ms-order:3;
   order:3
  }
  .order-xl-4 {
   -ms-flex-order:4;
+  -ms-order:4;
+  -webkit-order:4;
   order:4
  }
  .order-xl-5 {
   -ms-flex-order:5;
+  -ms-order:5;
+  -webkit-order:5;
   order:5
  }
  .order-xl-6 {
   -ms-flex-order:6;
+  -ms-order:6;
   order:6
  }
  .order-xl-7 {
   -ms-flex-order:7;
+  -ms-order:7;
   order:7
  }
  .order-xl-8 {
   -ms-flex-order:8;
+  -ms-order:8;
   order:8
  }
  .order-xl-9 {
   -ms-flex-order:9;
+  -ms-order:9;
   order:9
  }
  .order-xl-10 {
   -ms-flex-order:10;
+  -ms-order:10;
   order:10
  }
  .order-xl-11 {
   -ms-flex-order:11;
+  -ms-order:11;
   order:11
  }
  .order-xl-12 {
   -ms-flex-order:12;
+  -ms-order:12;
   order:12
  }
  .offset-xl-0 {
@@ -5383,6 +5469,7 @@ a.close.disabled {
  word-break:normal;
  word-spacing:normal;
  white-space:normal;
+ -webkit-line-break:auto;
  line-break:auto;
  font-size:.875rem;
  word-wrap:break-word;
@@ -5491,6 +5578,7 @@ a.close.disabled {
  word-break:normal;
  word-spacing:normal;
  white-space:normal;
+ -webkit-line-break:auto;
  line-break:auto;
  font-size:.875rem;
  word-wrap:break-word;

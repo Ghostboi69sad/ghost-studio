@@ -1,83 +1,84 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../lib/firebase/config';
+import React, { Fragment, useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import Navbar from "../../component/Navbar/Navbar";
+import Footer from "../../component/footer/Footer";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const auth = getAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     try {
-      await signUp(email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(userCredential.user);
       navigate('/profile'); // توجيه المستخدم إلى صفحة الملف الشخصي بعد التسجيل بنجاح
     } catch (error) {
-      setError('Failed to create an account');
+      setError(error instanceof Error ? error.message : 'Failed to create an account');
       console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Register a new account</h2>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+    <Fragment>
+      <div className="overflow-hidden bg__purple">
+        <Navbar />
+        <section className="pt-5">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-6">
+                <div className="wrapper__form-auth">
+                  <h2 className="bold font__size--42 text__40-1024 text__40-md text__40-mm color__white mb-4">
+                    Create an Account
+                  </h2>
+                  {error && <p className="alert alert-danger">{error}</p>}
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="email" className="medium font__size--14 text__14-1024 color__white">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="password" className="medium font__size--14 text__14-1024 color__white">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="btn btn__white color__purple shadow w-100">
+                      Register
+                    </button>
+                  </form>
+                  <p className="medium font__size--14 text__14-1024 color__white mt-4 text-center">
+                    Already have an account? <NavLink to="/login" className="color__white">Log in</NavLink>
+                  </p>
+                </div>
               </div>
             </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Register
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+        </section>
+        <Footer />
       </div>
-    </div>
+    </Fragment>
   );
 };
 
