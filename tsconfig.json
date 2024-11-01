@@ -25,15 +25,17 @@
       "react",
       "react-dom",
       "react-router-dom",
-      "tailwindcss",
-      "vite/client"
+      "tailwindcss"
     ]
   },
   "include": [
     "src",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/types/**/*.d.ts"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    { "path": "./tsconfig.node.json" }
+  ]
 }

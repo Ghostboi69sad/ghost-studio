@@ -2,15 +2,6 @@
   "name": "sloosh-learning-platform",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "src/*",
-    "components",
-    "functions",
-    "netlify/functions",
-    "src/course",
-    "src/course-listing",
-    "lib/firebase"
-  ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.682.0",
     "@aws-sdk/s3-request-presigner": "^3.682.0",
@@ -103,14 +94,8 @@
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck": "tsc --noEmit",
-    "build": "tsc && vite build",
-    "build-functions": "cd netlify/functions && yarn install && yarn build",
-    "build-submodules": "git submodule update --init --recursive",
-    "build-course": "cd src/course && yarn install && yarn build",
-    "build-listing": "cd src/course-listing && yarn install && yarn build",
-    "build-main": "yarn build",
-    "build-all": "yarn build-submodules && yarn install && yarn build-course && yarn build-listing && yarn build-main",
-    "build-netlify": "yarn install && yarn typecheck && yarn build && yarn build-functions"
+    "build": "vite build",
+    "build:netlify": "vite build && cp -r ./public/* ./dist/"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^6.0.0",
@@ -121,7 +106,7 @@
     "@types/dotenv": "^8.2.3",
     "@types/jquery": "^3.5.32",
     "@types/lokijs": "^1.5.14",
-    "@types/node": "^22.8.4",
+    "@types/node": "^22.8.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.2.7",
     "@types/react-slick": "^0.23.13",
@@ -140,6 +125,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "path": "^0.12.7",
     "postcss": "^8.4.19",
     "postcss-cli": "^11.0.0",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -171,5 +157,9 @@
   },
   "resolutions": {
     "postcss": "^8.1.9"
-  }
+  },
+  "workspaces": [
+    "src/course",
+    "src/course-listing"
+  ]
 }

@@ -1,8 +1,12 @@
 [build]
-base = "/"
-command = "yarn build-netlify"
+base = "./"
+command = "yarn build"
 publish = "dist"
 functions = "netlify/functions"
+ignore = "git diff --quiet HEAD^ HEAD ./src/course ./src/course-listing"
+
+[build.processing]
+skip_processing = true
 
 [build.environment]
 NODE_VERSION = "18"
@@ -17,11 +21,6 @@ external_node_modules = [
   "firebase-admin",
   "firebase",
   "@netlify/functions"
-]
-included_files = [
-  "src/course/**/*",
-  "src/course-listing/**/*",
-  "lib/firebase/**/*"
 ]
 
 [[redirects]]

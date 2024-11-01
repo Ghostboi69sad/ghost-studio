@@ -3,6 +3,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import * as path from 'path';
 
 declare global {
   interface ImportMetaEnv {
@@ -23,8 +24,7 @@ export default defineConfig({
       exclude: [/\.stories\.(t|j)sx?$/, /\.test\.(t|j)sx?$/],
       babel: {
         plugins: [
-          '@babel/plugin-transform-react-jsx',
-          ['@babel/plugin-transform-modules-commonjs', { noInterop: true }]
+          '@babel/plugin-transform-react-jsx'
         ]
       }
     }), 
@@ -32,21 +32,19 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': '/src',
-      'lib': '/lib'
+      '@': path.resolve(__dirname, './src'),
+      'lib': path.resolve(__dirname, './lib')
     }
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          // مكتبات الواجهة الأساسية
           'vendor-core': ['react', 'react-dom', 'react-router-dom'],
           
-          // مكونات Radix UI
-          'vendor-radix-dialog': ['@radix-ui/react-dialog'],
-          'vendor-radix-accordion': ['@radix-ui/react-accordion'],
-          'vendor-radix-utils': [
+          'vendor-radix': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-accordion',
             '@radix-ui/react-portal',
             '@radix-ui/react-presence',
             '@radix-ui/react-focus-scope',
@@ -54,30 +52,27 @@ export default defineConfig({
             '@radix-ui/react-dismissable-layer'
           ],
           
-          // مكونات UI المشتركة
-          'shared-ui': ['@/components/ui'],
+          'shared-ui': ['./src/components/ui'],
           
-          // مكونات الصفحات
-          'page-auth': [
-            '/src/container/Auth/Login',
-            '/src/container/Auth/Register',
-            '/src/container/Auth/ForgotPassword'
-          ],
-          'page-static': [
-            '/src/container/About',
-            '/src/container/Privacy',
-            '/src/container/Terms',
-            '/src/container/Faq'
-          ],
-          'page-blog': [
-            '/src/container/Blog',
-            '/src/container/BlogDetail'
+          'auth': [
+            './src/container/Auth/Login',
+            './src/container/Auth/Register',
+            './src/container/Auth/ForgotPassword'
           ],
           
-          // المكونات الرئيسية
-          'course': ['/src/course'],
-          'course-listing': ['/src/course-listing'],
-          'homepage': ['/src/container/Homepage']
+          'static': [
+            './src/container/About',
+            './src/container/Privacy',
+            './src/container/Terms',
+            './src/container/Faq'
+          ],
+          
+          'blog': [
+            './src/container/Blog',
+            './src/container/BlogDetail'
+          ],
+          
+          'homepage': ['./src/container/Homepage']
         }
       }
     },
