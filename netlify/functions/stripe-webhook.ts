@@ -16,9 +16,50 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-09-30.acacia',
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-09-30.acacia'
 });
+
+interface UserSubscriptionData {
+  subscription?: {
+    stripeCustomerId: string;
+    status: string;
+    planId: string;
+    currentPeriodEnd: string;
+    stripeSubscriptionId: string;
+  };
+}
+
+async function updateSubscriptionInFirebase(
+  userId: string, 
+  subscriptionData: Partial<UserSubscriptionData['subscription']>
+) {
+  const userRef = ref(db, `users/${userId}/subscription`);
+  await set(userRef, {
+    ...subscriptionData,
+    updatedAt: new Date().toISOString()
+  });
+}
+
+async function getUserIdFromCustomerId(customerId: string): Promise<string | null> {
+  try {
+    const usersRef = ref(db, 'users');
+    const snapshot = await get(usersRef);
+    
+    if (snapshot.exists()) {
+      const users = snapshot.val() as Record<string, UserSubscriptionData>;
+      for (const [userId, userData] of Object.entries(users)) {
+        if (userData.subscription?.stripeCustomerId === customerId) {
+          return userId;
+        }
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting userId:', error);
+    return null;
+  }
+}
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -40,9 +81,13 @@ export const handler: Handler = async (event) => {
   try {
     stripeEvent = stripe.webhooks.constructEvent(event.body || '', sig, webhookSecret);
   } catch (err) {
+    console.error('Webhook signature verification failed:', err);
     return {
       statusCode: 400,
-      body: `Webhook Error: ${err instanceof Error ? err.message : 'Unknown Error'}`
+      body: JSON.stringify({ 
+        error: 'Webhook signature verification failed',
+        details: err instanceof Error ? err.message : 'Unknown Error'
+      })
     };
   }
 
@@ -50,54 +95,28 @@ export const handler: Handler = async (event) => {
     switch (stripeEvent.type) {
       case 'checkout.session.completed': {
         const session = stripeEvent.data.object as Stripe.Checkout.Session;
-        const userId = session.client_reference_id;
-        const customerId = session.customer as string;
-        const subscriptionId = session.subscription as string;
-        
-        if (userId) {
-          // Get subscription details
-          const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-          const planId = subscription.items.data[0].price.id;
-          const currentPeriodEnd = new Date(subscription.current_period_end * 1000);
-          
-          // Update Firebase
-          const userRef = ref(db, `users/${userId}/subscription`);
-          await set(userRef, {
-            status: 'active',
-            planId,
-            stripeCustomerId: customerId,
-            stripeSubscriptionId: subscriptionId,
-            currentPeriodEnd: currentPeriodEnd.toISOString(),
-            createdAt: new Date().toISOString()
-          });
-        }
+        if (!session.client_reference_id) break;
+
+        const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+        await updateSubscriptionInFirebase(session.client_reference_id, {
+          status: 'active',
+          stripeCustomerId: session.customer as string,
+          stripeSubscriptionId: subscription.id,
+          planId: subscription.items.data[0].price.id,
+          currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
+        });
         break;
       }
 
-      case 'customer.subscription.updated': {
-        const subscription = stripeEvent.data.object as Stripe.Subscription;
-        const userId = await getUserIdFromCustomerId(subscription.customer as string);
-        
-        if (userId) {
-          const userRef = ref(db, `users/${userId}/subscription`);
-          await set(userRef, {
-            status: subscription.status,
-            currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString(),
-            updatedAt: new Date().toISOString()
-          });
-        }
-        break;
-      }
-
+      case 'customer.subscription.updated':
       case 'customer.subscription.deleted': {
         const subscription = stripeEvent.data.object as Stripe.Subscription;
         const userId = await getUserIdFromCustomerId(subscription.customer as string);
         
         if (userId) {
-          const userRef = ref(db, `users/${userId}/subscription`);
-          await set(userRef, {
-            status: 'canceled',
-            canceledAt: new Date().toISOString()
+          await updateSubscriptionInFirebase(userId, {
+            status: subscription.status,
+            currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
           });
         }
         break;
@@ -120,28 +139,3 @@ export const handler: Handler = async (event) => {
   }
 };
 
-interface UserSubscriptionData {
-  subscription?: {
-    stripeCustomerId: string;
-  };
-}
-
-async function getUserIdFromCustomerId(customerId: string): Promise<string | null> {
-  try {
-    const usersRef = ref(db, 'users');
-    const snapshot = await get(usersRef);
-    
-    if (snapshot.exists()) {
-      const users = snapshot.val() as Record<string, UserSubscriptionData>;
-      for (const [userId, userData] of Object.entries(users)) {
-        if (userData.subscription?.stripeCustomerId === customerId) {
-          return userId;
-        }
-      }
-    }
-    return null;
-  } catch (error) {
-    console.error('Error getting userId:', error);
-    return null;
-  }
-}

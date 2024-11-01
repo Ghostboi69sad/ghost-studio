@@ -1,17 +1,27 @@
 [build]
-base = "./"
-command = "yarn build"
+command = "yarn build:netlify"
 publish = "dist"
 functions = "netlify/functions"
-ignore = "git diff --quiet HEAD^ HEAD ./src/course ./src/course-listing"
+base = "/"
+
+[build.environment]
+NODE_VERSION = "18"
+YARN_VERSION = "1.22.22"
+YARN_ENABLE_WORKSPACE = "true"
 
 [build.processing]
 skip_processing = true
 
-[build.environment]
-NODE_VERSION = "18"
-YARN_VERSION = "1.22.19"
-NODE_ENV = "production"
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+[plugins.inputs]
+src = "/"
+
+[context.production]
+command = "yarn build"
+
+[context.deploy-preview]
+command = "yarn build"
 
 [functions]
 directory = "netlify/functions"
@@ -24,20 +34,30 @@ external_node_modules = [
 ]
 
 [[redirects]]
+from = "/course/*"
+to = "/course/index.html"
+status = 200
+
+[[redirects]]
+from = "/course-listing/*"
+to = "/course-listing/index.html"
+status = 200
+
+[[redirects]]
 from = "/api/*"
-to = "/netlify/functions/:splat"
+to = "/.netlify/functions/:splat"
 status = 200
 force = true
 
 [[redirects]]
 from = "/stripe-webhook"
-to = "/netlify/functions/stripe-webhook"
+to = "/.netlify/functions/stripe-webhook"
 status = 200
 force = true
 
 [[redirects]]
 from = "/check-subscription-status"
-to = "/netlify/functions/check-subscription-status"
+to = "/.netlify/functions/check-subscription-status"
 status = 200
 force = true
 
@@ -45,3 +65,7 @@ force = true
 from = "/*"
 to = "/index.html"
 status = 200
+
+[dev]
+framework = "vite"
+targetPort = 5173

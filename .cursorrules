@@ -115,10 +115,55 @@ Remove-Item -Path .git/modules/* -Recurse -Force
 Remove-Item -Path src/course -Recurse -Force
 Remove-Item -Path src/course-listing -Recurse -Force
 
-# إلغاء تهيئة المجلدات الفرعية
+# لغاء تهيئة المجلدات الفرعية
 git submodule deinit -f .
 
 # إعادة تهيئة المجلدات الفرعية
 git submodule init
 git submodule update --init --recursive
 git submodule update --remote
+
+# Workspace Rules
+- المشروع الرئيسي:
+  - يجب أن يكون له index.html خاص به
+  - يستخدم React Router للتنقل
+  - يتكامل مع المجلدات الفرعية
+  - يدير حالة المصادقة المركزية
+
+- المجلدات الفرعية:
+  - تعمل كتطبيقات Next.js مستقلة
+  - تستخدم نفس مكونات UI المشتركة
+  - تشترك في نفس التكوينات الأساسية
+  - تدعم SSR للصفحات الفردية
+
+# Build Rules
+- المشروع الرئيسي:
+  command: yarn build
+  output: dist/
+  
+- course submodule:
+  command: yarn workspace course build
+  output: src/course/.next/
+  
+- course-listing submodule:
+  command: yarn workspace course-listing build
+  output: src/course-listing/.next/
+
+# Deployment Rules
+- يجب نشر جميع المساحات في نفس الوقت
+- استخدام yarn workspaces للبناء
+- تكوين Next.js للمجلدات الفرعية
+- تكوين التوجيهات لكل مساحة عمل
+
+# Stripe Integration Rules
+- التحقق من الاشتراكات:
+  - التحقق من حالة الاشتراك قبل الوصول للدورات
+  - تحديث حالة الاشتراك في الوقت الفعلي
+  - معالجة webhook events
+  - إدارة المدفوعات والاشتراكات
+
+- أمان المدفوعات:
+  - التحقق من صحة webhook signatures
+  - تشفير بيانات الدفع
+  - تتبع محاولات الدفع
+  - معالجة الأخطاء والاستثناءات
