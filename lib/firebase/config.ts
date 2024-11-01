@@ -2,27 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
-// Add type declaration for import.meta.env
-declare global {
-  interface ImportMetaEnv {
-    VITE_FIREBASE_API_KEY: string;
-    VITE_FIREBASE_AUTH_DOMAIN: string;
-    VITE_FIREBASE_PROJECT_ID: string;
-    VITE_FIREBASE_STORAGE_BUCKET: string;
-    VITE_FIREBASE_MESSAGING_SENDER_ID: string;
-    VITE_FIREBASE_APP_ID: string;
-    VITE_FIREBASE_DATABASE_URL: string;
-  }
-}
-
+// استخدام process.env بدلاً من import.meta.env
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID,
+  databaseURL: process.env.VITE_FIREBASE_DATABASE_URL
 };
 
 // تحقق من وجود جميع المتغيرات البيئية المطلوبة
