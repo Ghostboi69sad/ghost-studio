@@ -3,6 +3,7 @@ command = "yarn build:netlify"
 publish = "dist"
 functions = "netlify/functions"
 base = "/"
+ignore = "git diff --quiet HEAD^ HEAD ./src/course ./src/course-listing"
 
 [build.environment]
 NODE_VERSION = "18"
@@ -15,7 +16,8 @@ skip_processing = true
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 [plugins.inputs]
-src = "/"
+monorepo = true
+root = "/"
 
 [context.production]
 command = "yarn build"
