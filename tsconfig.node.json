@@ -6,7 +6,10 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["node", "vite/client"]
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": ["@types/node", "vite/client"]
   },
   "include": ["vite.config.ts"]
 }
