@@ -24,11 +24,10 @@
       "./node_modules/@types"
     ],
     "types": [
-      "@types/node",
+      "node",
       "react",
       "react-dom",
-      "react-router-dom",
-      "tailwindcss"
+      "react-router-dom"
     ]
   },
   "include": [

@@ -1,6 +1,0 @@
-[submodule "src/course"]
-	path = src/course
-	url = https://github.com/Ghostboi69sad/course.git
-[submodule "src/course-listing"]
-	path = src/course-listing
-	url = https://github.com/Ghostboi69sad/course-listing.git
