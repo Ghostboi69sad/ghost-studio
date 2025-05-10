@@ -1,23 +1,14 @@
 [build]
 command = "yarn build:netlify"
 publish = "dist"
-functions = "netlify/functions"
 base = "/"
-ignore = "git diff --quiet HEAD^ HEAD ./src/course ./src/course-listing"
 
 [build.environment]
 NODE_VERSION = "18"
 YARN_VERSION = "1.22.22"
-YARN_ENABLE_WORKSPACE = "true"
 
 [build.processing]
 skip_processing = true
-
-[[plugins]]
-package = "@netlify/plugin-nextjs"
-
-[context.production]
-command = "yarn build"
 
 [context.deploy-preview]
 command = "yarn build"
