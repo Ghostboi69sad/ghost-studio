@@ -1,5 +1,5 @@
 [build]
-command = "yarn build:netlify"
+command = "yarn build"
 publish = "dist"
 base = "/"
 
@@ -9,6 +9,9 @@ YARN_VERSION = "1.22.22"
 
 [build.processing]
 skip_processing = true
+
+[build.environment]
+VITE_BASE_URL = '/'
 
 [context.deploy-preview]
 command = "yarn build"
